@@ -15,11 +15,11 @@ package frc.robot;
 public final class Constants {
 
     // Drive Stuff
-    public static final int FRONT_LEFT_ID = 21;
-    public static final int REAR_LEFT_ID = 20;
+    public static final int FRONT_LEFT_ID = 22;
+    public static final int REAR_LEFT_ID = 23;
 
-    public static final int FRONT_RIGHT_ID = 23;
-    public static final int REAR_RIGHT_ID = 22;
+    public static final int FRONT_RIGHT_ID = 20;
+    public static final int REAR_RIGHT_ID = 21;
 
     // Joystick Stuff
     public static final int JOYSTICK_PORT = 0;

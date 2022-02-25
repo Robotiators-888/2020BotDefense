@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 
 
@@ -25,12 +26,12 @@ public class DriveSubsystem extends SubsystemBase{
     // Left
     private final WPI_VictorSPX frontLeft = new WPI_VictorSPX(Constants.FRONT_LEFT_ID);
     private final WPI_VictorSPX rearLeft = new WPI_VictorSPX(Constants.REAR_LEFT_ID);
-    public final SpeedControllerGroup leftGroup = new SpeedControllerGroup(frontLeft, rearLeft);
+    public final MotorControllerGroup leftGroup = new MotorControllerGroup(frontLeft, rearLeft);
 
     // Right 
     private final WPI_VictorSPX frontRight = new WPI_VictorSPX(Constants.FRONT_RIGHT_ID);
     private final WPI_VictorSPX rearRight = new WPI_VictorSPX(Constants.REAR_RIGHT_ID);
-    public final SpeedControllerGroup rightGroup = new SpeedControllerGroup(frontRight,rearRight);
+    public final MotorControllerGroup rightGroup = new MotorControllerGroup(frontRight,rearRight);
 
 
     
@@ -43,7 +44,7 @@ public class DriveSubsystem extends SubsystemBase{
 
     public void drive(double ySpeed, double xSpeed,double zRotation){
         // ySpeed, xSpeed, and zRotation are all supplier values from the joystick object
-        driveTrain.driveCartesian(ySpeed,xSpeed,zRotation);
+        driveTrain.driveCartesian(ySpeed*.5,xSpeed*.5,zRotation*.5);
     }
     
 }
