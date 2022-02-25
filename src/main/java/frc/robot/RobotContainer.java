@@ -4,72 +4,56 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
+import frc.robot.commands.MecanumDriveCommand;
+import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.teleopDrive;
-
-
-import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.Joystick;
 
 
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  
-    private final Field2d field2d = new Field2d();
+  // The robot's subsystems and commands are defined here...
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final Joystick m_stick = new Joystick(Constants.JOYSTICK_PORT);
 
-    // subsystems
-
-    private Drivetrain drivetrain = new Drivetrain(field2d);
-   
-    private Autonomous autoHelper = new Autonomous(drivetrain);
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
     
-    // Joystick objects
-    private Joystick joystick = new Joystick(Constants.JOYSTICK_PORT);
-    private JoystickButton BOOST = new JoystickButton(joystick, 5);
+    //params : DriveSubsystem Object | X Axis Supplier with Dead Zone | Y Axis Supplier with Dead Zone | Z Axis Supplier with Dead Zone
+    MecanumDriveCommand driveTrain = new MecanumDriveCommand(m_driveSubsystem,
+    () -> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_X_AXIS)),
+    ()-> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_Y_AXIS)),
+    () -> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_Z_AXIS)));
 
+    m_driveSubsystem.setDefaultCommand(driveTrain);
+  }
 
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {}
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
+  /*
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return m_autoCommand;
+  }
+  */
 
- 
-
+  private double applyDeadZone(double axisVal){
+    double dz = Constants.DEAD_ZONE;
+    if (axisVal>dz && axisVal<-dz){
+      return 0;
     }
-
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        drivetrain.setDefaultCommand(new teleopDrive(drivetrain, () -> joystick.getRawAxis(Constants.LEFT_AXIS),
-                () -> joystick.getRawAxis(Constants.RIGHT_AXIS), ()-> false));
-        BOOST.whileHeld(new teleopDrive(drivetrain, () -> joystick.getRawAxis(Constants.LEFT_AXIS), () -> joystick.getRawAxis(Constants.RIGHT_AXIS), ()->joystick.getRawButton(5)) );
-  
-       
-    }
-
-    
+    return axisVal;
+  }
 }
