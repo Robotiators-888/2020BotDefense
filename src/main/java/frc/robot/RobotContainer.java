@@ -6,10 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -17,8 +15,13 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final Joystick m_stick = new Joystick(Constants.JOYSTICK_PORT);
+  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem(
+    this, 
+    () -> {
+      return (1 - m_stick.getRawAxis(Constants.JOYSTICK_SELECTOR_AXIS)) / 2;
+    });
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -29,10 +32,10 @@ public class RobotContainer {
     MecanumDriveCommand driveTrain = new MecanumDriveCommand(m_driveSubsystem,
     () -> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_X_AXIS)),
     ()-> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_Y_AXIS)),
-    () -> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_Z_AXIS)));
+    () -> applyDeadZone(m_stick.getRawAxis(Constants.JOYSTICK_Z_AXIS)),
+    () -> m_stick.getRawButton(1));
 
-    m_driveSubsystem.setDefaultCommand(driveTrain);
-  }
+    m_driveSubsystem.setDefaultCommand(driveTrain);  }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by

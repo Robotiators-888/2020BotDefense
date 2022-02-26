@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MecanumDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_subsystem;
-  public Supplier<Double> xSpeed,ySpeed,zRotation;
+  Supplier<Double> xSpeed,ySpeed,zRotation;
+  Supplier<Boolean> lock;
 
 
   /**
@@ -24,12 +25,14 @@ public class MecanumDriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MecanumDriveCommand(DriveSubsystem subsystem,Supplier<Double> xSpeed, Supplier<Double> ySpeed,Supplier<Double> zRotation) {
+  public MecanumDriveCommand(DriveSubsystem subsystem,Supplier<Double> xSpeed, Supplier<Double> ySpeed,
+    Supplier<Double> zRotation, Supplier<Boolean> lock) {
     
     m_subsystem = subsystem;
     this.xSpeed = xSpeed;
     this.ySpeed = ySpeed;
     this.zRotation = zRotation;
+    this.lock = lock;
     addRequirements(subsystem);
   }
 
@@ -44,7 +47,12 @@ public class MecanumDriveCommand extends CommandBase {
   public void execute() {
 
     // Drive
-    m_subsystem.drive(ySpeed.get(),xSpeed.get(),zRotation.get());
+    if(lock.get().booleanValue()) {
+      if(Math.abs(ySpeed.get()) > Math.abs(xSpeed.get()))
+        m_subsystem.drive(ySpeed.get(), 0, 0);
+      else if(Math.abs(ySpeed.get()) < Math.abs(xSpeed.get()))
+        m_subsystem.drive(0, xSpeed.get(), 0);
+    } else m_subsystem.drive(ySpeed.get(),xSpeed.get(),zRotation.get());
 
     // Put numbers on SmartDashboard
     SmartDashboard.putNumber("ySpeed Value",ySpeed.get());
