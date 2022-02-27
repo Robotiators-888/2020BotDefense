@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 
 public class DriveSubsystem extends SubsystemBase{
+    @SuppressWarnings("unused")
     private RobotContainer m_robotContainer;
     private Supplier<Double> multiplier;
 

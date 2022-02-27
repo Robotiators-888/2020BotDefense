@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AutoDrive;
 import frc.robot.commands.MecanumDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -45,12 +47,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {}
 
-  /*
+  
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new AutoDrive(m_driveSubsystem);
   }
-  */
+  
 
   private double applyDeadZone(double axisVal){
     double dz = Constants.DEAD_ZONE;
