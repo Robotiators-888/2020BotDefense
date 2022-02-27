@@ -39,8 +39,9 @@ public class RobotContainer {
     private Autonomous autoHelper = new Autonomous(drivetrain);
     
     // Joystick objects
-    private Joystick joystick = new Joystick(Constants.JOYSTICK_PORT);
-    private JoystickButton BOOST = new JoystickButton(joystick, 5);
+    private Joystick right_Joystick = new Joystick(Constants.RIGHT_JOYSTICK_PORT);
+    private Joystick left_Joystick = new Joystick(Constants.LEFT_JOYSTICK_PORT);
+   // private JoystickButton BOOST = new JoystickButton(joystick, 5);
 
 
 
@@ -64,9 +65,9 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        drivetrain.setDefaultCommand(new teleopDrive(drivetrain, () -> joystick.getRawAxis(Constants.LEFT_AXIS),
-                () -> joystick.getRawAxis(Constants.RIGHT_AXIS), ()-> false));
-        BOOST.whileHeld(new teleopDrive(drivetrain, () -> joystick.getRawAxis(Constants.LEFT_AXIS), () -> joystick.getRawAxis(Constants.RIGHT_AXIS), ()->joystick.getRawButton(5)) );
+        drivetrain.setDefaultCommand(new teleopDrive(drivetrain, () -> left_Joystick.getRawAxis(Constants.Y_AXIS),
+                () -> right_Joystick.getRawAxis(Constants.Y_AXIS), ()-> false));
+       // BOOST.whileHeld(new teleopDrive(drivetrain, () -> left_Joystick.getRawAxis(Constants.Y_AXIS), () -> right_Joystick.getRawAxis(Constants.Y_AXIS), ()->joystick.getRawButton(5)) );
   
        
     }

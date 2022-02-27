@@ -28,13 +28,12 @@ public final class Constants {
 
 
     // Joystick ports
-    public static final int JOYSTICK_PORT = 0;
-    public static final int LEFTJOYSTICK_PORT = 1;
-    public static final int TWISTSTICK_PORT = 2;
+ 
+    public static final int LEFT_JOYSTICK_PORT = 0;
+    public static final int RIGHT_JOYSTICK_PORT = 1;
 
     // Joystick axis
-    public static final int LEFT_AXIS = 1;
-    public static final int RIGHT_AXIS = 5;
+    public static final int Y_AXIS = 1;
     public static final double DEAD_ZONE = 0.3;
 
 
