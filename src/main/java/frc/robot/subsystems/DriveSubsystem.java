@@ -19,8 +19,6 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 
 public class DriveSubsystem extends SubsystemBase{
-    @SuppressWarnings("unused")
-    private RobotContainer m_robotContainer;
     private Supplier<Double> multiplier;
 
     // Left
@@ -33,13 +31,12 @@ public class DriveSubsystem extends SubsystemBase{
 
     public final MecanumDrive driveTrain;
 
-    public DriveSubsystem(RobotContainer rc, Supplier<Double> multiplier){
+    public DriveSubsystem(Supplier<Double> multiplier){
         frontRight.setInverted(true);
         rearRight.setInverted(true);
         frontLeft.setInverted(false);
         rearLeft.setInverted(false);
 
-        m_robotContainer = rc;
         this.multiplier = multiplier;
 
         driveTrain = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);

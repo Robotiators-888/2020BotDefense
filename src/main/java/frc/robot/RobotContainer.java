@@ -19,7 +19,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Joystick m_stick = new Joystick(Constants.JOYSTICK_PORT);
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem(
-    this, 
     () -> {
       return (1 - m_stick.getRawAxis(Constants.JOYSTICK_SELECTOR_AXIS)) / 2;
     });

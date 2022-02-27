@@ -29,8 +29,8 @@ public class AutoDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(time.get() < 5.0) dt.drive(-0.4, 0, 0);
-    else if(time.get() >= 5.0 && time.get() < 10.0) dt.drive(-0.1, 0, 0.3);
+    if(time.get() < 5.0) dt.drive(-0.2, 0, 0);
+    else if(time.get() >= 5.0 && time.get() < 10.0) dt.drive(-0.1, 0, 0.8);
     else dt.drive(0, 0, 0);
   }
 
